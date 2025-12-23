@@ -1,59 +1,79 @@
 "use client";
-
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+
+    const navItems = [
+        { name: "Work", href: "#" },
+        { name: "About", href: "#" },
+        { name: "Lab", href: "#" },
+    ];
 
     return (
-        <div>
-            <nav className='px-[4rem] pt-[53px] pb-[48px]'>
+        // 1. Initial "Fall Down" animation for the whole header
+        <motion.header 
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full z-50 relative"
+        >
+            <nav className='px-[2rem] lg:px-[4rem] pt-[40px] pb-[30px]'>
                 <ul className='flex items-center justify-between relative'>
 
-                    {/* --- START OF LOGO IMPLEMENTATION --- */}
+                    {/* --- LOGO --- */}
                     <div className="group relative cursor-pointer">
-                        {/* The 'UI' Text */}
                         <div className="text-4xl font-black transition-all duration-500 ease-in-out group-hover:scale-x-50 group-hover:opacity-0">
                             UI
                         </div>
-
-                        {/* The Full Name - Absolute positioned to sit exactly over the UI */}
                         <div className="absolute inset-0 flex items-center justify-start whitespace-nowrap text-xl font-bold tracking-tighter opacity-0 transition-all duration-500 ease-in-out group-hover:scale-x-105 group-hover:tracking-normal group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
-                            UHUNMWANGHO ISAAC
+                            ISAAC UHUNMWANGHO
                         </div>
                     </div>
-                    {/* --- END OF LOGO IMPLEMENTATION --- */}
 
-                    <div className={`header-items flex gap-[2rem] items-center ${isOpen ? 'active' : ''}`}>
-                        <li><a>Work</a></li>
-                        <li><a>About</a></li>
-                        <li><a>Lab</a></li>
-                        <button className=' bg-white accent-black px-[32px] py-[16px]  rounded-4xl hover:bg-gray-500
-                     transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-gray-500'>Contact me</button>
+                    {/* --- NAV ITEMS --- */}
+                    <div className={`flex gap-[2rem] items-center ${isOpen ? 'flex' : 'hidden md:flex'}`}>
+                        {navItems.map((item) => (
+                            <li 
+                                key={item.name} 
+                                className="list-none relative group"
+                                onMouseEnter={() => setHoveredPath(item.name)}
+                                onMouseLeave={() => setHoveredPath(null)}
+                            >
+                                <a 
+                                    href={item.href}
+                                    className={`text-lg font-medium transition-opacity duration-300 ${
+                                        hoveredPath && hoveredPath !== item.name ? "opacity-30" : "opacity-100"
+                                    }`}
+                                >
+                                    {item.name}
+                                </a>
+                                
+                                {/* The Sliding Underline */}
+                                <span className={`absolute -bottom-1 left-0 w-full h-[2px] bg-black origin-left transition-transform duration-300 ease-out ${
+                                    hoveredPath === item.name ? "scale-x-100" : "scale-x-0"
+                                }`} />
+                            </li>
+                        ))}
+
+                        {/* Contact Button with your existing logic or the sliding effect */}
+                        <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[12px] rounded-full font-semibold active:scale-95 transition-all duration-300'>
+                           <span className='relative z-10'>Contact me</span>
+                           <div className='absolute inset-0 z-0 h-full w-full translate-y-[100%] bg-gray-600 transition-transform duration-300 ease-out group-hover:translate-y-0' />
+                        </button>
                     </div>
 
-                    <button
-                        className={`mobile-menu-btn md:hidden ${isOpen ? 'active' : ''}`}
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="menu-icon"
-                        >
-                            {isOpen ? (
-                                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                            ) : (
-                                <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                            )}
+                    {/* Mobile Toggle */}
+                    <button className='md:hidden' onClick={() => setIsOpen(!isOpen)}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            {isOpen ? <path d="M18 6L6 18M6 6l12 12"/> : <path d="M4 7H20M4 12H20M4 17H20"/>}
                         </svg>
                     </button>
                 </ul>
             </nav>
-        </div>
+        </motion.header>
     );
 };
 
