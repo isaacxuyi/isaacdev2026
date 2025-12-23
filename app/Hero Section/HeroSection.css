@@ -19,7 +19,7 @@
 
 /* Ensure children stay on top of the video */
 .hero-layout-wrapper > * {
-    z-index: -1;
+    z-index: 1;
 }
 /* DESKTOP (Default) */
 .mobile-menu-btn {

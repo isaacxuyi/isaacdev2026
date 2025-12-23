@@ -13,7 +13,7 @@ const Hero = () => {
                     Specializing in Web Applications, SaaS Platforms, and Mobile Experiences
                 </p>
 
-                <div className='flex justify-center flex-row gap-5 pt-[1.8rem]'>
+                <div className='flex justify-center flex-row gap-5 pt-3 pb-5'>
                     <div className='bg-gray-200 accent-black px-[32px] py-[16px] rounded-4xl font-semibold hover:bg-black
                      transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-gray-500'>See my work</div>
 

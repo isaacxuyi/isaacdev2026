@@ -6,7 +6,7 @@ import Footer from "../componets/Footer/page";
 
 export default function HeroSection() {
     return (
-        <section className="hero-layout-wrapper ">
+        <section className="hero-layout-wrapper">
             {/* The video sits here, behind the children */}
             <video autoPlay muted loop playsInline className="background-video">
                 <source src="Assets/videos/Clip.mp4" type="video/mp4" />

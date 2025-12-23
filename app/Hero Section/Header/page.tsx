@@ -19,7 +19,7 @@ const Header = () => {
 
                         {/* The Full Name - Absolute positioned to sit exactly over the UI */}
                         <div className="absolute inset-0 flex items-center justify-start whitespace-nowrap text-xl font-bold tracking-tighter opacity-0 transition-all duration-500 ease-in-out group-hover:scale-x-105 group-hover:tracking-normal group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
-                            UHUNMWANGHI ISAAC
+                            UHUNMWANGHO ISAAC
                         </div>
                     </div>
                     {/* --- END OF LOGO IMPLEMENTATION --- */}
