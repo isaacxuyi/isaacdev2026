@@ -1,0 +1,149 @@
+.hero-layout-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Or however tall you want the hero area */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0; /* Background layer */
+}
+
+/* Ensure children stay on top of the video */
+.hero-layout-wrapper > * {
+    z-index: -1;
+}
+/* DESKTOP (Default) */
+.mobile-menu-btn {
+    display: none; /* Hide on large screens */
+}
+
+.header-items {
+    display: flex; /* Always show on large screens */
+}
+
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .header-items {
+        display: none; /* Hide standard list on mobile */
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 2rem;
+        align-items: flex-start;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        max-width: 60%;
+        padding: 20px;
+    }
+
+    /* Only show the list when the menu is toggled open */
+    .header-items.active {
+        display: flex;
+        visibility: visible;
+    }
+
+    /* Show the button only on mobile */
+    .mobile-menu-btn {
+        /* 1. Create the Circle */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;  /* Size of the circle */
+        height: 50px; /* Size of the circle */
+        border-radius: 50%;
+
+        /* 2. Background and Border of the circle */
+        background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+        border: 2px solid black; /* Circle border color */
+
+        /* 3. Icon Color */
+        color: black; /* Change this to any color you like for the SVG */
+
+        cursor: pointer;
+        transition: all 0.3s ease; /* Smooth hover effect */
+    }
+
+    /* Hover effect for the circle */
+    .mobile-menu-btn:hover {
+        background-color: #ffffff;
+        color: #000000; /* Icon turns black on hover */
+    }
+
+    /* Ensure the SVG inherits the color */
+    .menu-icon {
+        stroke: currentColor; /* This makes the SVG use the 'color' defined above */
+    }
+
+    @media (max-width: 768px) {
+        .mobile-menu-btn {
+            display: flex; /* Show on mobile */
+        }
+    }
+}
+/* 1. Logo Container Setup */
+.logo-container {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    min-width: 50px; /* Space for 'UI' */
+    min-height: 40px;
+}
+
+.logo-container a {
+    position: relative;
+    display: block;
+}
+
+/* 2. Hide the Full Name by default */
+.logo-full {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 3. Style the 'UI' text */
+.logo-short {
+    display: block;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+/* 4. THE HOVER LOGIC */
+.logo-container:hover .logo-short {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.logo-container:hover .logo-full {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* On Mobile, you might want to disable this so it stays 'UI' */
+@media (max-width: 768px) {
+    .logo-full {
+        display: none; /* Keeps it as 'UI' on small screens to avoid overlap */
+    }
+}
+
