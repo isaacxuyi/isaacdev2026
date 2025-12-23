@@ -15,7 +15,6 @@ export default function HeroSection() {
             {/* The components sit on top */}
             <Header />
             <Hero />
-            <Footer />
         </section>
 
 
