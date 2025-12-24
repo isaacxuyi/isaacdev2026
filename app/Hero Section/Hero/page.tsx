@@ -69,7 +69,7 @@ const Hero = ({ finishedLoading }: HeroProps) => {
                     {/* Secondary Button */}
                     <button className='group relative overflow-hidden bg-gray-200 text-black px-8 py-4 rounded-full font-semibold transition-all duration-300 active:scale-95'>
                         <span className='relative z-10 transition-colors duration-300 group-hover:text-white'>
-                            Send me an email
+                            Send me an email.
                         </span>
                         {/* Applied the same fix here just in case */}
                         <div className='absolute inset-0 z-0 h-full w-full -translate-x-[101%] bg-black transition-transform duration-300 ease-out group-hover:translate-x-0' />
