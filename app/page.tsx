@@ -5,7 +5,7 @@ import HeroSection from "@/app/Hero Section/page";
 import VideoArea from "@/app/components/videoArea/page";
 import Footer from "@/app/components/Footer/page";
 import Selectedworks from './components/Selectedworks/page';
-import Preloader from './components/Preloader'; // Adjust path as needed
+import Preloader from './components/Preloader';
 
 const Page = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -28,8 +28,9 @@ const Page = () => {
             </AnimatePresence>
 
             {/* Main Content */}
+            {/* We pass !isLoading so components know when to start animating */}
             <div className="relative">
-                <HeroSection />
+                <HeroSection finishedLoading={!isLoading} />
                 <VideoArea />
                 <Selectedworks />
                 <Footer />

@@ -1,8 +1,12 @@
 "use client";
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
-const Header = () => {
+interface HeaderProps {
+    finishedLoading: boolean;
+}
+
+const Header = ({ finishedLoading }: HeaderProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
@@ -12,12 +16,27 @@ const Header = () => {
         { name: "lab", href: "#" },
     ];
 
+    // Variants for the Header animation
+    const headerVariants: Variants = {
+        hidden: { y: -100, opacity: 0 },
+        visible: { 
+            y: 0, 
+            opacity: 1,
+            transition: { 
+                duration: 0.8, 
+                ease: [0.16, 1, 0.3, 1],
+                // Wait 0.5s after loading finishes (curtain rise) to start
+                delay: 0.5 
+            } 
+        }
+    };
+
     return (
-        // 1. Initial "Fall Down" animation for the whole header
         <motion.header 
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            variants={headerVariants}
+            initial="hidden"
+            // Only animate to visible if loading is finished
+            animate={finishedLoading ? "visible" : "hidden"}
             className="w-full z-50 relative"
         >
             <nav className='px-[2rem] lg:px-[4rem] pt-[40px] pb-[30px]'>
@@ -58,7 +77,6 @@ const Header = () => {
                             </li>
                         ))}
 
-                        {/* Contact Button with your existing logic or the sliding effect */}
                         <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[14px] rounded-full font-semibold active:scale-95 transition-all duration-300'>
                            <span className='relative z-10'>Contact me</span>
                            <div className='absolute inset-0 z-0 h-full w-full translate-y-[100%] bg-gray-600 transition-transform duration-300 ease-out group-hover:translate-y-0' />

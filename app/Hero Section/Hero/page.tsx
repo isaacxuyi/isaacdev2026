@@ -2,15 +2,19 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 
-const Hero = () => {
-    // Adding ': Variants' or 'as const' ensures TypeScript recognizes the animation properties correctly
+interface HeroProps {
+    finishedLoading: boolean;
+}
+
+const Hero = ({ finishedLoading }: HeroProps) => {
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
+                // Waits 0.8s after loading finishes (syncs with curtain rise)
+                delayChildren: 0.8, 
                 staggerChildren: 0.2,
-                delayChildren: 0.3,
             },
         },
     };
@@ -22,7 +26,7 @@ const Hero = () => {
             opacity: 1,
             transition: {
                 duration: 0.8,
-                ease: [0.16, 1, 0.3, 1], // TypeScript now accepts this as a cubic-bezier
+                ease: [0.16, 1, 0.3, 1],
             },
         },
     };
@@ -32,7 +36,8 @@ const Hero = () => {
             className='min-h-[80vh] flex items-center justify-center'
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
+            // Trigger animation only when preloader is done
+            animate={finishedLoading ? "visible" : "hidden"}
         >
             <div className='flex justify-center flex-col items-center w-full'>
                 
