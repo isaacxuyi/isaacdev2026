@@ -25,16 +25,16 @@ const ExperienceLogos = () => {
     },
   ];
 
-  // Animation variants for the individual items
+ // Animation variants for the individual items
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.8 + i * 0.2, // Starts after the previous hero animations
+        delay: 0.8 + i * 0.2,
         duration: 0.6,
-        ease: "easeOut"
+        ease: "easeOut" as const // <--- Add 'as const' here
       }
     })
   };
