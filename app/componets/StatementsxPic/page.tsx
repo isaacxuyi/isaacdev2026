@@ -18,13 +18,13 @@ const page = () => {
     }),
   };
 
-  const childVariants = {
+ const childVariants = {
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const, // Added 'as const'
         damping: 12,
         stiffness: 200,
       },
@@ -62,18 +62,18 @@ const page = () => {
                         ))}
                     </motion.div>
 
-                    <p className='text-[16px] lg:text-[18px]'>I'm a UX/UI Designer passionate about creating digital experiences that solve real problems. Over 10 years of helping companies transform complex challenges into user-centered solutions. Rome-based, globally minded.</p>
+                    <p className='text-[16px] lg:text-[18px]'>I'm a UX/UI Designer passionate about creating digital experiences that solve real problems. Over 10 years of helping companies transform complex challenges into user-centered Solutions. Rome-based, globally minded.</p>
 
                     {/* IMAGE ANIMATION ADDED HERE */}
-                    <motion.div 
-                        className='w-[320px] h-[325.729px] flex items-center justify-center self-center lg:self-start lg:w-[501.67px] lg:h-[501.67px] rounded-lg overflow-hidden'
+                  <motion.div 
+                        className='w-[320px] h-[325.729px] ...'
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ 
-                            type: "spring", 
+                            type: "spring" as const, // Added 'as const'
                             stiffness: 100, 
                             damping: 15,
-                            delay: 0.6 // Starts after the text begins animating
+                            delay: 0.6 
                         }}
                     >
                         <Image
