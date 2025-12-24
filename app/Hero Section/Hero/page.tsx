@@ -12,7 +12,6 @@ const Hero = ({ finishedLoading }: HeroProps) => {
         visible: {
             opacity: 1,
             transition: {
-                // Waits 0.8s after loading finishes (syncs with curtain rise)
                 delayChildren: 0.8, 
                 staggerChildren: 0.2,
             },
@@ -36,7 +35,6 @@ const Hero = ({ finishedLoading }: HeroProps) => {
             className='min-h-[80vh] flex items-center justify-center'
             variants={containerVariants}
             initial="hidden"
-            // Trigger animation only when preloader is done
             animate={finishedLoading ? "visible" : "hidden"}
         >
             <div className='flex justify-center flex-col items-center w-full'>
@@ -59,14 +57,22 @@ const Hero = ({ finishedLoading }: HeroProps) => {
                     variants={itemVariants}
                     className='flex flex-wrap justify-center gap-5 pt-10'
                 >
-                    <button className='group relative overflow-hidden bg-[#402d2d] text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 active:scale-95 shadow-lg'>
-                        <span className='relative z-10'>See my work</span>
-                        <div className='absolute inset-0 z-0 h-full w-full translate-x-[-100%] bg-black transition-transform duration-300 ease-out group-hover:translate-x-0' />
+                    {/* Primary Button */}
+                    <button className='group relative overflow-hidden bg-black text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl'>
+                        <span className='relative z-10 transition-colors duration-300 group-hover:text-black'>
+                            See my work
+                        </span>
+                        {/* Changed to -101% to prevent the white sliver from peeking */}
+                        <div className='absolute inset-0 z-0 h-full w-full -translate-x-[101%] bg-white transition-transform duration-300 ease-out group-hover:translate-x-0' />
                     </button>
 
+                    {/* Secondary Button */}
                     <button className='group relative overflow-hidden bg-gray-200 text-black px-8 py-4 rounded-full font-semibold transition-all duration-300 active:scale-95'>
-                        <span className='relative z-10 transition-colors duration-300 group-hover:text-white'>Send me an email</span>
-                        <div className='absolute inset-0 z-0 h-full w-full translate-x-[-100%] bg-gray-600 transition-transform duration-300 ease-out group-hover:translate-x-0' />
+                        <span className='relative z-10 transition-colors duration-300 group-hover:text-white'>
+                            Send me an email
+                        </span>
+                        {/* Applied the same fix here just in case */}
+                        <div className='absolute inset-0 z-0 h-full w-full -translate-x-[101%] bg-black transition-transform duration-300 ease-out group-hover:translate-x-0' />
                     </button>
                 </motion.div>
 
