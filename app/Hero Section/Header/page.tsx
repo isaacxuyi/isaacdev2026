@@ -12,7 +12,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
 
     const navItems = [
         { name: "Work", href: "#" },
-        { name: "About", href: "#" },
+        { name: "About", href: "/about" },
         { name: "lab", href: "#" },
     ];
 
