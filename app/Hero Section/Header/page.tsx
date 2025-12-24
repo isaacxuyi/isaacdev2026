@@ -16,7 +16,6 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         { name: "lab", href: "#" },
     ];
 
-    // Variants for the Header animation
     const headerVariants: Variants = {
         hidden: { y: -100, opacity: 0 },
         visible: { 
@@ -25,7 +24,6 @@ const Header = ({ finishedLoading }: HeaderProps) => {
             transition: { 
                 duration: 0.8, 
                 ease: [0.16, 1, 0.3, 1],
-                // Wait 0.5s after loading finishes (curtain rise) to start
                 delay: 0.5 
             } 
         }
@@ -35,7 +33,6 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         <motion.header 
             variants={headerVariants}
             initial="hidden"
-            // Only animate to visible if loading is finished
             animate={finishedLoading ? "visible" : "hidden"}
             className="w-full z-50 relative"
         >
@@ -69,25 +66,42 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                                 >
                                     {item.name}
                                 </a>
-                                
-                                {/* The Sliding Underline */}
                                 <span className={`absolute -bottom-1 left-0 w-full h-[2px] bg-black origin-left transition-transform duration-300 ease-out ${
                                     hoveredPath === item.name ? "scale-x-100" : "scale-x-0"
                                 }`} />
                             </li>
                         ))}
 
-                        <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[14px] rounded-full font-semibold active:scale-95 transition-all duration-300'>
-                           <span className='relative z-10'>Contact me</span>
-                           <div className='absolute inset-0 z-0 h-full w-full translate-y-[100%] bg-gray-600 transition-transform duration-300 ease-out group-hover:translate-y-0' />
-                        </button>
+                        {/* Updated Horizontal Slide Button */}
+                        <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[14px] rounded-full font-semibold active:scale-95 transition-all duration-300 border border-black'>
+    {/* Text color transitions from white to black on hover */}
+    <span className='relative z-10 transition-colors duration-300 group-hover:text-black'>
+        Contact me
+    </span>
+    
+    {/* Sliding Background: White background, slides from left (-full) to right (0) */}
+    <div className='absolute inset-0 z-0 h-full w-full -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0' />
+</button>
                     </div>
 
                     {/* Mobile Toggle */}
-                    <button className='md:hidden' onClick={() => setIsOpen(!isOpen)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            {isOpen ? <path d="M18 6L6 18M6 6l12 12"/> : <path d="M4 7H20M4 12H20M4 17H20"/>}
-                        </svg>
+                    <button 
+                        className='md:hidden flex items-center justify-center w-12 h-12 rounded-full border border-black shadow-sm transition-all duration-300 active:scale-90' 
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <motion.div
+                            animate={isOpen ? { rotate: 90 } : { rotate: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex items-center justify-center"
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                                {isOpen ? (
+                                    <path d="M18 6L6 18M6 6l12 12"/> 
+                                ) : (
+                                    <path d="M4 8H20M4 16H20"/> 
+                                )}
+                            </svg>
+                        </motion.div>
                     </button>
                 </ul>
             </nav>
