@@ -9,7 +9,7 @@ const Header = () => {
     const navItems = [
         { name: "Work", href: "#" },
         { name: "About", href: "#" },
-        { name: "Lab", href: "#" },
+        { name: "lab", href: "#" },
     ];
 
     return (
@@ -44,7 +44,7 @@ const Header = () => {
                             >
                                 <a 
                                     href={item.href}
-                                    className={`text-lg font-medium transition-opacity duration-300 ${
+                                    className={`text-[21px] font-medium transition-opacity duration-300 ${
                                         hoveredPath && hoveredPath !== item.name ? "opacity-30" : "opacity-100"
                                     }`}
                                 >
@@ -59,7 +59,7 @@ const Header = () => {
                         ))}
 
                         {/* Contact Button with your existing logic or the sliding effect */}
-                        <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[12px] rounded-full font-semibold active:scale-95 transition-all duration-300'>
+                        <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[14px] rounded-full font-semibold active:scale-95 transition-all duration-300'>
                            <span className='relative z-10'>Contact me</span>
                            <div className='absolute inset-0 z-0 h-full w-full translate-y-[100%] bg-gray-600 transition-transform duration-300 ease-out group-hover:translate-y-0' />
                         </button>
