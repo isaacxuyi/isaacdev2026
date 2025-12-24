@@ -1,22 +1,40 @@
-import React from 'react';
-// Import the PARENT component, not the individual pieces
+"use client";
+import React, { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import HeroSection from "@/app/Hero Section/page";
-import VideoArea from "@/app/componets/videoArea/page";
-import Footer from "@/app/componets/Footer/page";
-import Selectedworks from './componets/Selectedworks/page';
+import VideoArea from "@/app/components/videoArea/page";
+import Footer from "@/app/components/Footer/page";
+import Selectedworks from './components/Selectedworks/page';
+import Preloader from './components/Preloader'; // Adjust path as needed
 
 const Page = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Prevent scrolling while loading
+    useEffect(() => {
+        if (isLoading) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isLoading]);
+
     return (
-        <div>
-            {/* This one component now contains your video, header, and hero info */}
-            <HeroSection />
-            <VideoArea />
-            <Selectedworks />
-            <Footer />
+        <main>
+            <AnimatePresence mode="wait">
+                {isLoading && (
+                    <Preloader key="loader" setLoading={setIsLoading} />
+                )}
+            </AnimatePresence>
 
-
-            {/* Rest of your page content goes here */}
-        </div>
+            {/* Main Content */}
+            <div className="relative">
+                <HeroSection />
+                <VideoArea />
+                <Selectedworks />
+                <Footer />
+            </div>
+        </main>
     );
 };
 

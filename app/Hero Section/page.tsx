@@ -1,7 +1,7 @@
 import Hero from "@/app/Hero Section/Hero/page";
 import Header from "@/app/Hero Section/Header/page";
 import './HeroSection.css' // Your styles for the container
-import Footer from "../componets/Footer/page";
+import Footer from "../components/Footer/page";
 
 
 export default function HeroSection() {
