@@ -28,7 +28,7 @@ const ExperienceLogos = () => {
   // Animation variants for the individual items
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
