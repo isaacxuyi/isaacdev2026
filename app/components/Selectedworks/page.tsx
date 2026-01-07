@@ -1,8 +1,26 @@
 "use client";
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef, useEffect } from 'react'
+import { gsap } from 'gsap'
 
 const Selectedworks = () => {
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (backgroundRef.current) gsap.set(backgroundRef.current, { x: "-101%" });
+    if (textRef.current) gsap.set(textRef.current, { color: "#171717" });
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (backgroundRef.current) gsap.to(backgroundRef.current, { x: 0, duration: 0.4, ease: "power2.out" });
+    if (textRef.current) gsap.to(textRef.current, { color: "#ffffff", duration: 0.3 });
+  };
+
+  const handleMouseLeave = () => {
+    if (backgroundRef.current) gsap.to(backgroundRef.current, { x: "-101%", duration: 0.4, ease: "power2.out" });
+    if (textRef.current) gsap.to(textRef.current, { color: "#171717", duration: 0.3 });
+  };
+
   const works = [
     { 
       id: 1, 
@@ -69,8 +87,9 @@ const Selectedworks = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24 w-full max-w-[1200px] items-start mb-24">
         {works.map((work) => (
           <div key={work.id} className={`flex flex-col gap-4 md:gap-6 ${work.gridClass}`}>
-            <motion.div
-              whileHover={{ y: -12, transition: { duration: 0.4, ease: "easeOut" } }}
+            <div
+              onMouseEnter={(e) => gsap.to(e.currentTarget, { y: -12, duration: 0.4, ease: "power2.out" })}
+              onMouseLeave={(e) => gsap.to(e.currentTarget, { y: 0, duration: 0.4, ease: "power2.out" })}
               className={`relative overflow-hidden rounded-3xl cursor-pointer w-full ${work.boxHeight}`}
               style={{ backgroundColor: work.color }}
             />
@@ -88,31 +107,22 @@ const Selectedworks = () => {
       </div>
 
       {/* Button */}
-      <motion.button
-        initial="rest"
-        whileHover="hover"
-        animate="rest"
+      <button
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className="relative overflow-hidden px-8 py-3 rounded-full font-manrope font-semibold text-sm cursor-pointer bg-[#f0f0f0]"
       >
-        <motion.div
-          variants={{
-            rest: { x: "-101%" },
-            hover: { x: 0 }
-          }}
-          transition={{ duration: 0.4, ease: [0.6, 0.01, -0.05, 0.9] }}
+        <div
+          ref={backgroundRef}
           className="absolute inset-0 bg-black"
         />
-        <motion.span
-          variants={{
-            rest: { color: "#171717" },
-            hover: { color: "#ffffff" }
-          }}
-          transition={{ duration: 0.3 }}
+        <span
+          ref={textRef}
           className="relative z-10"
         >
           View more works
-        </motion.span>
-      </motion.button>
+        </span>
+      </button>
     </section>
   )
 }
