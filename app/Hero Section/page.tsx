@@ -10,7 +10,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ finishedLoading }: HeroSectionProps) {
-    return (
+    return ( 
         <section className="hero-layout-wrapper">
             {/* The video sits here, behind the children */}
             <video autoPlay muted loop playsInline className="background-video">
