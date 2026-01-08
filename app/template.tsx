@@ -47,15 +47,17 @@ export default function Template({ children }: { children: React.ReactNode }) {
     })
     
     // --- CONTENT ---
+    // The content fade-in is timed to start just as the first wave begins to retract.
+    // This ensures that entry animations on the new page are visible during the reveal.
     .fromTo(containerRef.current, {
       y: 50, 
       opacity: 0,
     }, {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 1.2, // Slightly increased for a smoother blend with the reveal
       ease: 'power3.out'
-    }, "-=0.5") 
+    }, 1.3) // Starts at 1.3s, just after the top wave starts retracting (at 1.2s)
   })
 
   return (

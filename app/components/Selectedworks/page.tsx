@@ -1,6 +1,7 @@
 "use client";
-import React, { useRef, useEffect } from 'react'
-import { gsap } from 'gsap'
+import React, { useRef, useEffect } from 'react';
+import Image from 'next/image';
+import { gsap } from 'gsap';
 
 const Selectedworks = () => {
   const backgroundRef = useRef<HTMLDivElement>(null);
@@ -27,6 +28,7 @@ const Selectedworks = () => {
       title: "Project One", 
       category: "UI/UX", 
       description: "A deep dive into modern minimalist interfaces.",
+      image: "/Assets/images/sherd.jpg",
       color: "#e2e2e2",
       boxHeight: "h-[400px] md:h-[500px]", // Responsive height
       gridClass: "" 
@@ -36,6 +38,7 @@ const Selectedworks = () => {
       title: "Project Two", 
       category: "Web Dev", 
       description: "Building scalable systems for the next generation of web.",
+      image: "/Assets/images/salutis.jpg",
       color: "#d1d1d1",
       boxHeight: "h-[400px] md:h-[650px]", 
       gridClass: "" 
@@ -45,6 +48,7 @@ const Selectedworks = () => {
       title: "Project Three", 
       category: "Full Stack", 
       description: "A comprehensive platform that combines seamless design with powerful backend architecture.",
+      image: "/Assets/images/photoshootrome.jpg",
       color: "#c4c4c4",
       boxHeight: "h-[400px] md:h-[550px]", 
       gridClass: "md:col-span-2" 
@@ -54,6 +58,7 @@ const Selectedworks = () => {
       title: "Project Four", 
       category: "Product", 
       description: "Exploring the intersection of physical and digital products.",
+      image: "/Assets/images/universal-orchestrator.jpg",
       color: "#e2e2e2",
       boxHeight: "h-[400px] md:h-[650px]", 
       gridClass: "" 
@@ -63,6 +68,7 @@ const Selectedworks = () => {
       title: "Project Five", 
       category: "Branding", 
       description: "Visual identity for a forward-thinking tech startup.",
+      image: "/Assets/images/clara.jpg",
       color: "#d1d1d1",
       boxHeight: "h-[400px] md:h-[500px]", 
       gridClass: "" 
@@ -70,10 +76,10 @@ const Selectedworks = () => {
   ];
 
   return (
-    <section className='flex justify-center flex-col items-center w-full px-6 py-12 md:py-20 bg-white'>
+    <section className='flex justify-center flex-col items-center w-full px-[6rem] py-12 md:py-20 bg-white'>
       
       {/* Header: Adjusted for mobile (text-4xl) and desktop (text-6xl) */}
-      <h1 className='text-4xl md:text-6xl font-black pt-10 pb-6 md:py-[3rem] font-manrope text-center'>
+      <h1 className='text-1xl md:text-6xl pt-10 pb-6 md:py-[3rem] font-semibold font-manrope text-center'>
         Selected works
       </h1>
 
@@ -90,9 +96,17 @@ const Selectedworks = () => {
             <div
               onMouseEnter={(e) => gsap.to(e.currentTarget, { y: -12, duration: 0.4, ease: "power2.out" })}
               onMouseLeave={(e) => gsap.to(e.currentTarget, { y: 0, duration: 0.4, ease: "power2.out" })}
-              className={`relative overflow-hidden rounded-3xl cursor-pointer w-full ${work.boxHeight}`}
+              className={`group relative overflow-hidden rounded-3xl cursor-pointer w-full ${work.boxHeight}`}
               style={{ backgroundColor: work.color }}
-            />
+            >
+              <Image
+                src={work.image}
+                alt={work.title}
+                fill
+                style={{ objectFit: 'cover' }}
+                className="transition-transform duration-500 ease-in-out group-hover:scale-105"
+              />
+            </div>
 
             <div className="px-1 md:px-2">
               <div className="flex justify-between items-baseline mb-2">

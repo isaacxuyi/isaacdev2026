@@ -20,7 +20,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
     const mobileMenuPathRef1 = useRef<SVGPathElement>(null);
     const mobileMenuPathRef2 = useRef<SVGPathElement>(null);
     const mobileMenuSvgRef = useRef<SVGSVGElement>(null);
-    const mobileMenuLinksRef = useRef<HTMLDivElement>(null);
+    const mobileMenuContentRef = useRef<HTMLDivElement>(null);
     
     // Timeline reference for cleanup
     const tl = useRef<gsap.core.Timeline | null>(null);
@@ -31,10 +31,14 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         { name: "Lab", href: "/lab" },
     ];
 
+    const socialLinks = [
+        "Behance", "Dribbble", "Instagram", "Linkedin", "X (Twitter)"
+    ];
+
     useGSAP(() => {
         // 1. Cleanup old animations
         if (tl.current) tl.current.kill();
-        gsap.killTweensOf([mobileMenuRef.current, mobileMenuPathRef1.current, mobileMenuPathRef2.current, mobileMenuLinksRef.current]);
+        gsap.killTweensOf([mobileMenuRef.current, mobileMenuPathRef1.current, mobileMenuPathRef2.current, mobileMenuContentRef.current]);
 
         // 2. Animate Hamburger Rotation
         gsap.to(toggleRef.current, {
@@ -53,12 +57,12 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         if (isOpen) {
             // --- OPEN ANIMATION ---
             gsap.set(mobileMenuRef.current, { display: "block" });
-            document.body.style.overflow = "hidden"; // Lock scroll
+            document.body.style.overflow = "hidden"; 
 
             // Reset paths if starting fresh
             if (!mobileMenuRef.current?.classList.contains('is-animating')) {
                  gsap.set([mobileMenuPathRef1.current, mobileMenuPathRef2.current], { attr: { d: hiddenPath } });
-                 gsap.set(mobileMenuLinksRef.current, { opacity: 0 });
+                 gsap.set(mobileMenuContentRef.current, { opacity: 0, y: 20 });
             }
             mobileMenuRef.current?.classList.add('is-animating');
 
@@ -69,12 +73,12 @@ const Header = ({ finishedLoading }: HeaderProps) => {
             // Wave 2
             .to(mobileMenuPathRef2.current, { attr: { d: curvePath }, duration: 0.8, ease: 'power3.in' }, "-=0.7")
             .to(mobileMenuPathRef2.current, { attr: { d: fullPath }, duration: 0.4, ease: 'power2.out' })
-            // Links Fade In
-            .to(mobileMenuLinksRef.current, { opacity: 1, duration: 0.5, ease: 'power3.out' }, "-=0.5");
+            // Content Fade In (Staggered slightly)
+            .to(mobileMenuContentRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, "-=0.4");
 
         } else {
             // --- CLOSE ANIMATION ---
-            document.body.style.overflow = ""; // Unlock scroll
+            document.body.style.overflow = ""; 
 
             if (mobileMenuRef.current && mobileMenuRef.current.style.display !== 'none') {
                 tl.current = gsap.timeline({ 
@@ -85,7 +89,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                 });
 
                 tl.current
-                .to(mobileMenuLinksRef.current, { opacity: 0, duration: 0.2, ease: 'power3.in' })
+                .to(mobileMenuContentRef.current, { opacity: 0, y: -20, duration: 0.2, ease: 'power3.in' })
                 // Wave 1 Retreat
                 .to(mobileMenuPathRef1.current, { attr: { d: curvePath }, duration: 0.4, ease: 'power2.in' })
                 .to(mobileMenuPathRef1.current, { attr: { d: hiddenPath }, duration: 0.8, ease: 'power3.out' })
@@ -101,18 +105,11 @@ const Header = ({ finishedLoading }: HeaderProps) => {
             ref={headerRef}
             className="w-full z-50 relative"
         >
-            {/* NAV CONTAINER: z-[101]
-              This sits physically ABOVE the white overlay (z-[100]).
-            */}
-            <nav className='relative z-[101] px-[2rem] lg:px-[4rem] pt-[40px] pb-[30px]'>
+            <nav className='relative z-[101] px-[2rem] lg:px-[9rem] pt-[70px] pb-[30px]'>
                 <div className='flex items-center justify-between relative'>
 
                     {/* --- LOGO --- */}
                     <Link href="/" className="group relative cursor-pointer">
-                        {/* Text Color Logic:
-                           - Always 'text-black' so it is visible against the WHITE menu background.
-                           - If your home page is dark, you might want: ${isOpen ? 'text-black' : 'text-white'}
-                        */}
                         <div className="text-4xl font-black text-black transition-all duration-500 ease-in-out group-hover:scale-x-50 group-hover:opacity-0">
                             UI
                         </div>
@@ -154,11 +151,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
 
                     {/* --- MOBILE TOGGLE BUTTON --- */}
                     <button 
-                        className={`md:hidden flex items-center justify-center w-12 h-12 rounded-full border shadow-sm transition-all duration-300 active:scale-90 relative ${
-                            // Logic: If open (white BG), button is black. If closed, button is black.
-                            // If your site is dark mode, change 'border-black text-black' to 'border-white text-white' for the closed state.
-                            isOpen ? 'border-black text-black' : 'border-black text-black'
-                        }`}
+                        className="md:hidden flex items-center justify-center w-12 h-12 rounded-full border border-black text-black shadow-sm transition-all duration-300 active:scale-90 relative"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         <div
@@ -178,7 +171,6 @@ const Header = ({ finishedLoading }: HeaderProps) => {
             </nav>
 
             {/* --- MOBILE MENU OVERLAY --- */}
-            {/* z-[100] is BELOW the nav (z-[101]) */}
             <div 
                 ref={mobileMenuRef} 
                 style={{ display: 'none' }} 
@@ -190,20 +182,64 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                     <path ref={mobileMenuPathRef1} className="fill-white drop-shadow-[0_20px_20px_rgba(0,0,0,0.1)]" />
                 </svg>
 
-                {/* Navigation Links: BLACK */}
-                <div ref={mobileMenuLinksRef} className="relative z-10 flex flex-col items-center justify-center h-full gap-8 pointer-events-auto opacity-0">
-                    {navItems.map(item => (
+                {/* --- MENU CONTENT --- */}
+                <div ref={mobileMenuContentRef} className="relative z-10 flex flex-col justify-between h-full w-full pointer-events-auto px-6 pt-32 pb-8">
+                    
+                    {/* 1. Main Navigation */}
+                    <div className="flex flex-col items-center gap-6">
+                        {navItems.map(item => (
+                            <Link
+                                key={item.name} 
+                                href={item.href}
+                                onClick={() => setIsOpen(false)}
+                                // Added 'font-serif' and 'italic' to match the image style
+                                className={`text-5xl font-serif italic text-black transition-colors duration-300 ${
+                                    pathname === item.href ? 'opacity-50' : 'hover:opacity-70'
+                                }`}
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
+                        {/* 'Contact me' added manually to list to match image layout */}
                         <Link
-                            key={item.name} 
-                            href={item.href}
+                            href="/contact"
                             onClick={() => setIsOpen(false)}
-                            className={`text-2xl italic font-black uppercase text-black transition-colors duration-300 ${
-                                pathname === item.href ? 'opacity-50' : 'hover:opacity-70'
-                            }`}
+                            className="text-5xl font-serif italic text-black hover:opacity-70 transition-colors duration-300"
                         >
-                            {item.name}
+                            Contact me
                         </Link>
-                    ))}
+                    </div>
+
+                    {/* 2. Social Links */}
+                    <div className="flex flex-col items-center gap-3 mt-8">
+                        {socialLinks.map((link) => (
+                            <a 
+                                key={link} 
+                                href="#" 
+                                className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
+                            >
+                                {link}
+                            </a>
+                        ))}
+                    </div>
+
+                    {/* 3. Footer (Play Reel / Get in Touch) */}
+                    <div className="flex items-end justify-between w-full mt-auto">
+                        <span className="text-gray-500 text-sm font-medium cursor-pointer hover:text-black">
+                            Play Reel
+                        </span>
+                        
+                        <div className="flex items-center gap-3 cursor-pointer group">
+                            <span className="text-black font-bold text-lg">Get in touch</span>
+                            <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M7 17L17 7"/>
+                                    <path d="M7 7h10v10"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </header>

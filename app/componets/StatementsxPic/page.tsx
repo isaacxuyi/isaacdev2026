@@ -88,7 +88,7 @@ const page = () => {
                 
 
                <div className='flex flex-col gap-12 lg:gap-10'>
-                        <blockquote className='text-[20px] lg:text-[24px]'>"I thought I wanted to be a developer until I discovered something more exciting: understanding why users click what they click. What started as a computer science degree became a fascination with human behaviour and interface design. Turns out, I was meant to build bridges between people and technology, not just write code."</blockquote>
+                        <blockquote className='text-[20px] lg:text-[24px] text-gray-700 font-semibold italic'>"I thought I wanted to be a developer until I discovered something more exciting: understanding why users click what they click. What started as a computer science degree became a fascination with human behaviour and interface design. Turns out, I was meant to build bridges between people and technology, not just write code."</blockquote>
                         <p className='text-[16px] lg:text-[18px]'>I'm an award-winning product designer specializing in UX/UI, based in Rome, Italy, where I've been working as a freelancer for about 7 years. I've partnered with companies like HCL and IBM to create web applications and platforms that solve real business challenges.</p>
                         <p className='text-[16px] lg:text-[18px]'>I'm also the founder of Persona team, a collective of curious minds focused on design and development. My work has been featured in 'Interactive Design for Screen' by Sandu Publishing, and I've been recognized by leading design communities worldwide.</p>
                         
