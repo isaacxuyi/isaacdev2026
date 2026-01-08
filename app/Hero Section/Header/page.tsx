@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom'; // 1. Import createPortal
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
@@ -13,14 +13,18 @@ interface HeaderProps {
 const Header = ({ finishedLoading }: HeaderProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [hoveredPath, setHoveredPath] = useState<string | null>(null);
-    // 2. Add mounted state for Portal
     const [mounted, setMounted] = useState(false); 
     const pathname = usePathname();
 
     const headerRef = useRef<HTMLElement>(null);
-    const toggleRef = useRef<HTMLDivElement>(null);
+    const toggleRef = useRef<HTMLDivElement>(null); // Inner hamburger div
     
-    // Refs for the menu components
+    // --- 1. NEW REFS FOR ENTRANCE ANIMATION ---
+    const logoRef = useRef<HTMLAnchorElement>(null);
+    const navRef = useRef<HTMLDivElement>(null);
+    const mobileButtonRef = useRef<HTMLButtonElement>(null); // Outer button
+
+    // Mobile Menu Refs
     const mobileMenuRef = useRef<HTMLDivElement>(null);
     const mobileMenuPathRef1 = useRef<SVGPathElement>(null);
     const mobileMenuPathRef2 = useRef<SVGPathElement>(null);
@@ -39,27 +43,47 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         "Behance", "Dribbble", "Instagram", "Linkedin", "X (Twitter)"
     ];
 
-    // 3. Set mounted to true on client load
     useEffect(() => {
         setMounted(true);
     }, []);
 
+    // --- 2. NEW ENTRANCE ANIMATION LOGIC ---
     useGSAP(() => {
-        // Only run animations if the menu is actually mounted in the DOM
-        if (!mobileMenuRef.current) return;
+        // Only trigger if loading is finished
+        if (finishedLoading) {
+            const elementsToAnimate = [
+                logoRef.current, 
+                navRef.current, 
+                mobileButtonRef.current
+            ].filter(Boolean); // Safety check
 
-        // Cleanup old animations
+            gsap.fromTo(elementsToAnimate, 
+                { y: -30, opacity: 0 }, 
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 1, 
+                    ease: "power3.out", 
+                    stagger: 0.15,
+                    delay: 0.2 // Wait a tiny bit for preloader curtain to clear
+                }
+            );
+        }
+    }, { dependencies: [finishedLoading] });
+
+    // --- EXISTING MOBILE MENU LOGIC ---
+    useGSAP(() => {
+        if (!mobileMenuRef.current) return;
+        
         if (tl.current) tl.current.kill();
         gsap.killTweensOf([mobileMenuRef.current, mobileMenuPathRef1.current, mobileMenuPathRef2.current, mobileMenuContentRef.current]);
 
-        // Animate Hamburger Rotation
         gsap.to(toggleRef.current, {
             rotation: isOpen ? 90 : 0,
             duration: 0.3,
             ease: 'power2.out'
         });
 
-        // Define Wave Paths
         const hiddenPath = "M 0 0 L 100 0 L 100 0 Q 50 0 0 0 Z"; 
         const curvePath = "M 0 0 L 100 0 L 100 100 Q 50 30 0 100 Z"; 
         const fullPath = "M 0 0 L 100 0 L 100 100 Q 50 100 0 100 Z"; 
@@ -67,7 +91,6 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         tl.current = gsap.timeline();
 
         if (isOpen) {
-            // --- OPEN ANIMATION ---
             gsap.set(mobileMenuRef.current, { display: "block" });
             document.body.style.overflow = "hidden"; 
 
@@ -85,7 +108,6 @@ const Header = ({ finishedLoading }: HeaderProps) => {
             .to(mobileMenuContentRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, "-=0.4");
 
         } else {
-            // --- CLOSE ANIMATION ---
             document.body.style.overflow = ""; 
 
             if (mobileMenuRef.current && mobileMenuRef.current.style.display !== 'none') {
@@ -104,7 +126,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                 .to(mobileMenuPathRef2.current, { attr: { d: hiddenPath }, duration: 0.8, ease: 'power3.out' });
             }
         }
-    }, { dependencies: [isOpen, mounted] }); // Add mounted dependency
+    }, { dependencies: [isOpen, mounted] });
 
     return (
         <>
@@ -114,8 +136,13 @@ const Header = ({ finishedLoading }: HeaderProps) => {
             >
                 <nav className='relative z-[101] px-[2rem] lg:px-[9rem]s pt-[70px] pb-[30px]'>
                     <div className='flex items-center justify-between relative'>
-                        {/* --- LOGO --- */}
-                        <Link href="/" className="group relative cursor-pointer">
+
+                        {/* --- LOGO (Added ref & opacity-0) --- */}
+                        <Link 
+                            ref={logoRef}
+                            href="/" 
+                            className="group relative cursor-pointer opacity-0" 
+                        >
                             <div className="text-4xl font-black text-black transition-all duration-500 ease-in-out group-hover:scale-x-50 group-hover:opacity-0">
                                 UI
                             </div>
@@ -124,8 +151,11 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                             </div>
                         </Link>
 
-                        {/* --- NAV ITEMS (Desktop) --- */}
-                        <div className="hidden md:flex gap-[2rem] items-center">
+                        {/* --- NAV ITEMS (Added ref & opacity-0) --- */}
+                        <div 
+                            ref={navRef}
+                            className="hidden md:flex gap-[2rem] items-center opacity-0"
+                        >
                             {navItems.map((item) => (
                                 <div
                                     key={item.name}
@@ -155,9 +185,10 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                             </button>
                         </div>
 
-                        {/* --- MOBILE TOGGLE BUTTON --- */}
+                        {/* --- MOBILE TOGGLE (Added ref & opacity-0) --- */}
                         <button 
-                            className="md:hidden flex items-center justify-center w-12 h-12 rounded-full border border-black text-black shadow-sm transition-all duration-300 active:scale-90 relative z-[102]"
+                            ref={mobileButtonRef}
+                            className="md:hidden flex items-center justify-center w-12 h-12 rounded-full border border-black text-black shadow-sm transition-all duration-300 active:scale-90 relative z-[102] opacity-0"
                             onClick={() => setIsOpen(!isOpen)}
                         >
                             <div
@@ -177,21 +208,18 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                 </nav>
             </header>
 
-            {/* --- PORTAL: MOVES MENU TO BODY TAG --- */}
+            {/* --- PORTAL --- */}
             {mounted && createPortal(
                 <div 
                     ref={mobileMenuRef} 
                     style={{ display: 'none' }} 
-                    // 4. Boosted Z-Index to 9998 to sit above everything but below your custom cursor (if any)
                     className="fixed inset-0 z-[9998] h-dvh w-full pointer-events-none"
                 >
-                    {/* SVG Background */}
                     <svg ref={mobileMenuSvgRef} className="absolute inset-0 w-full h-full pointer-events-auto" viewBox="0 0 100 100" preserveAspectRatio="none">
                         <path ref={mobileMenuPathRef2} className="fill-white" />
                         <path ref={mobileMenuPathRef1} className="fill-white drop-shadow-[0_20px_20px_rgba(0,0,0,0.1)]" />
                     </svg>
 
-                    {/* --- MENU CONTENT --- */}
                     <div ref={mobileMenuContentRef} className="relative z-10 flex flex-col justify-between h-full w-full pointer-events-auto px-6 pt-32 pb-8">
                         
                         <div className="flex flex-col items-center gap-6">
