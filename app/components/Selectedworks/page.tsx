@@ -25,10 +25,10 @@ const Selectedworks = () => {
   const works = [
     { 
       id: 1, 
-      title: "Project One", 
+      title: "Tradei", 
       category: "UI/UX", 
-      description: "A deep dive into modern minimalist interfaces.",
-      image: "/Assets/images/sherd.jpg",
+      description: "Tradei is a high-performance, AI-driven trading ecosystem designed to bridge the gap between complex market analysis and execution.",
+      image: "/Assets/images/tradei.png",
       color: "#e2e2e2",
       boxHeight: "h-[400px] md:h-[500px]", // Responsive height
       gridClass: "" 
@@ -38,7 +38,7 @@ const Selectedworks = () => {
       title: "Project Two", 
       category: "Web Dev", 
       description: "Building scalable systems for the next generation of web.",
-      image: "/Assets/images/salutis.jpg",
+      image: "/Assets/images/oeme.jpg",
       color: "#d1d1d1",
       boxHeight: "h-[400px] md:h-[650px]", 
       gridClass: "" 
@@ -48,7 +48,7 @@ const Selectedworks = () => {
       title: "Project Three", 
       category: "Full Stack", 
       description: "A comprehensive platform that combines seamless design with powerful backend architecture.",
-      image: "/Assets/images/photoshootrome.jpg",
+      image: "/Assets/images/50706abc266ea09e6b5a3d31804afb1b.png",
       color: "#c4c4c4",
       boxHeight: "h-[400px] md:h-[550px]", 
       gridClass: "md:col-span-2" 

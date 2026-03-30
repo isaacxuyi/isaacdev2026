@@ -76,10 +76,10 @@ const Footer = () => {
               Socials
             </p>
             <ul className="flex flex-col gap-4">
-              {renderLink("LinkedIn", "https://linkedin.com", true)}
-              {renderLink("Twitter / X", "https://twitter.com", true)}
-              {renderLink("GitHub", "https://github.com", true)}
-              {renderLink("Instagram", "https://instagram.com", true)}
+              {renderLink("LinkedIn", "https://www.linkedin.com/in/isaacuyi/", true)}
+              {renderLink("Twitter / X", "https://x.com/isaacuyiuhu", true)}
+              {renderLink("GitHub", "https://github.com/isaacxuyi", true)}
+              {renderLink("Contra", "https://contra.com/isaac_uhunmwangho_mv5uovt6", true)}
             </ul>
           </div>
 

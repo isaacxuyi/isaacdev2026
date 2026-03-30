@@ -41,7 +41,7 @@ const Hero = ({ finishedLoading }: HeroProps) => {
                     ref={(el) => { if (el && !itemsRef.current.includes(el)) itemsRef.current.push(el); }}
                     className='text-[1.1rem] md:text-[1.3rem] w-full text-center leading-relaxed max-w-2xl mx-auto px-5 mt-6 text-black/70'
                 >
-                    Hey, I'm Luca, a Senior UX/UI Designer crafting digital experiences and solving complex problems for over a decade.
+                    Hey, I'm Isaac, a Frontend Developer crafting digital experiences and solving complex problems.
                 </p>
 
                 <div 

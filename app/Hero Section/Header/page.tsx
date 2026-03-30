@@ -37,6 +37,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
         { name: "Work", href: "/works" },
         { name: "About", href: "/about" },
         { name: "Lab", href: "/lab" },
+        
     ];
 
     const socialLinks = [
@@ -177,12 +178,12 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                                 </div>
                             ))}
 
-                            <button className='group relative overflow-hidden bg-black text-white px-[32px] py-[14px] rounded-full font-semibold active:scale-95 transition-all duration-300 border border-black'>
+                            <Link href="/getintouch" className='group relative overflow-hidden bg-black text-white px-[32px] py-[14px] rounded-full font-semibold active:scale-95 transition-all duration-300 border border-black'>
                                 <span className='relative z-10 transition-colors duration-300 group-hover:text-black'>
                                     Contact me
                                 </span>
                                 <div className='absolute inset-0 z-0 h-full w-full -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0' />
-                            </button>
+                            </Link>
                         </div>
 
                         {/* --- MOBILE TOGGLE (Added ref & opacity-0) --- */}
@@ -236,7 +237,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                                 </Link>
                             ))}
                             <Link
-                                href="/contact"
+                                href="/getintouch"
                                 onClick={() => setIsOpen(false)}
                                 className="text-5xl font-serif italic text-black hover:opacity-70 transition-colors duration-300"
                             >
@@ -261,7 +262,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                                 Play Reel
                             </span>
                             
-                            <div className="flex items-center gap-3 cursor-pointer group">
+                            <Link href="/getintouch" onClick={() => setIsOpen(false)} className="flex items-center gap-3 cursor-pointer group">
                                 <span className="text-black font-bold text-lg">Get in touch</span>
                                 <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -269,7 +270,7 @@ const Header = ({ finishedLoading }: HeaderProps) => {
                                         <path d="M7 7h10v10"/>
                                     </svg>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                     </div>
