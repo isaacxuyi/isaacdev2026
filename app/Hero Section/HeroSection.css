@@ -125,6 +125,8 @@
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
+    font-size: 1.875rem; /* Equivalent to Tailwind's text-3xl */
+    font-weight: 700; /* Equivalent to Tailwind's font-bold */
     transition: all 0.3s ease-in-out;
 }
 
@@ -132,6 +134,8 @@
 .logo-short {
     display: block;
     transition: all 0.3s ease-in-out;
+    font-size: 1.875rem; /* Equivalent to Tailwind's text-3xl */
+    font-weight: 700; /* Equivalent to Tailwind's font-bold */
     opacity: 1;
 }
 
@@ -152,5 +156,3 @@
         display: none; /* Keeps it as 'UI' on small screens to avoid overlap */
     }
 }
-
-

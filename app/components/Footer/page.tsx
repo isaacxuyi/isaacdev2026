@@ -65,7 +65,7 @@ const Footer = () => {
             <ul className="flex flex-col gap-4">
               {renderLink("About", "/about")}
               {renderLink("Work", "/works")}
-              {renderLink("Lab", "/Lab")}
+              {renderLink("Lab", "/lab")}
               {renderLink("Contact", "/getintouch")}
             </ul>
           </div>
