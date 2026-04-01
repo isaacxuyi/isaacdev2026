@@ -79,7 +79,7 @@ const Footer = () => {
               {renderLink("LinkedIn", "https://www.linkedin.com/in/isaacuyi/", true)}
               {renderLink("Twitter / X", "https://x.com/isaacuyiuhu", true)}
               {renderLink("GitHub", "https://github.com/isaacxuyi", true)}
-              {renderLink("Contra", "https://contra.com/isaac_uhunmwangho_mv5uovt6", true)}
+              {renderLink("Contra", "https://contra.com/isaacuyi", true)}
             </ul>
           </div>
 
