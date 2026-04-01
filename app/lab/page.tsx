@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import Header from "@/app/Hero Section/Header/page";
-import Footer from "@/app/componets/Footer/page";
+import Footer from "@/app/components/Footer/page";
 import { gsap } from 'gsap';
 
 const Page = () => {
@@ -100,6 +100,8 @@ const Page = () => {
       </section>
 
       <Footer />
+
+
     </div>
   );
 };

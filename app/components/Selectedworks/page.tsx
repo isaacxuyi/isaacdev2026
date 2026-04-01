@@ -26,7 +26,7 @@ const Selectedworks = () => {
     { 
       id: 1, 
       title: "Tradei", 
-      category: "UI/UX", 
+      category: "Software", 
       description: "Tradei is a high-performance, AI-driven trading ecosystem designed to bridge the gap between complex market analysis and execution.",
       image: "/Assets/images/tradei.png",
       color: "#e2e2e2",
